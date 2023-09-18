@@ -43,7 +43,7 @@ data "aws_route_tables" "rts" {
 }
 
 resource "aws_vpn_gateway_route_propagation" "gcp" {
-  for_each             = var.aws_route_tables_ids != null ? toset(var.aws_route_tables_ids) : data.aws_route_tables.rts.ids
+  for_each             = var.aws_route_tables_ids != null ? toset(var.aws_route_tables_ids) : toset(data.aws_route_tables.rts.ids)
   vpn_gateway_id       = aws_vpn_gateway.default.id
   route_table_id       = each.value
 }
